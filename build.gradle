@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.9.3'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+    ext {
+        allureVersion = '2.15.0'
+    }
+
+dependencies {
+
+    implementation 'org.testng:testng:7.4.0'
+
+    implementation 'org.seleniumhq.selenium:selenium-server:4.0.0-alpha-2'
+    implementation 'io.github.bonigarcia:webdrivermanager:5.0.2'
+}
+
+
+
+task chromeTest(type:Test){
+    systemProperty("driver","chrome")
+    useTestNG() {
+        suites "\\src\\test\\resources\\testNG.xml"
+    }
+
+}
+task egTest(type:Test){
+    systemProperty("driver","eg")
+    useTestNG() {
+        suites "\\src\\test\\resources\\testNG.xml"
+    }
+
+}
+
+allure {
+    version = "${allureVersion}"
+
+    useTestNG {
+        version = "${allureVersion}"
+
+    }
+}
